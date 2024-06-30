@@ -14,7 +14,7 @@ StationTitle = configData['StationTitle']
 StationURL = configData['StationURL']
 Description = configData['Description']
 webhooks = configData['webhooks']
-embed_color = configData.get('EmbedColor', '0x800080')  
+embed_color = configData.get('EmbedColor', '0x800080')
 
 def main(content):
     description = 'Data received'
