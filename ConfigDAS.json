@@ -1,0 +1,11 @@
+{
+    "SerialPort": "COM3",
+    "StationTitle": "example",
+    "StationURL": "https:/example1.example1",
+    "Description": "Footer Text!",
+    "webhooks": [
+        "example1",
+        "example2"
+    ],
+    "EmbedColor": "0xb19cd9"
+}
