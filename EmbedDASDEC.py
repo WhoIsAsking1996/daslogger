@@ -6,6 +6,7 @@ import time
 import serial
 from discord_webhook import DiscordEmbed, DiscordWebhook
 
+# Load configuration data
 with open("ConfigDAS.json", "r") as f:
     configData = json.load(f)
 
@@ -18,7 +19,7 @@ embed_color = configData.get('EmbedColor', '0x800080')
 
 def main(content):
     description = 'Data received'
-    
+
     if len(content) == 3:
         embed = create_embed(content[0], description, content[1], content[2])
     elif len(content) == 4:
@@ -29,7 +30,7 @@ def main(content):
     elif len(content) == 5:
         embed = create_embed(content[1], content[0], content[2], content[4], extra_text=content[3])
     else:
-        print("Error.")
+        print("Error: Unexpected content length.")
         return
 
     for webhook_url in webhooks:
@@ -37,7 +38,7 @@ def main(content):
         webhook.add_embed(embed)
         response = webhook.execute()
         if response.status_code == 200:
-            print(f"Successfully posted to webhook\n")
+            print("Successfully posted to webhook\n")
         else:
             print(f"Failed to post to webhook. Status code: {response.status_code}")
 
@@ -49,7 +50,7 @@ def create_embed(title, description, eas_text_data, eas_protocol_data, extra_tex
     embed.add_embed_field(name='EAS Text Data:', value=eas_text_data, inline=False)
     if extra_text:
         embed.add_embed_field(name='Extra Text:', value=extra_text, inline=False)
-    embed.add_embed_field(name='EAS Protocol Data:', value=eas_protocol_data, inline=False)
+    embed.add_embed_field(name='Raw ZCZC Data:', value=f'```{eas_protocol_data}```\nClick to copy', inline=False)
     return embed
 
 def formatting(data4):
@@ -73,7 +74,7 @@ def formatting(data4):
             data.insert(0, '')
     data = ''.join(data).split('ZCZC-')
     data2.append(data[0])
-    data2.append('ZCZC-'+data[1])
+    data2.append('ZCZC-' + data[1])
     return data2
 
 def AHHH(data):
